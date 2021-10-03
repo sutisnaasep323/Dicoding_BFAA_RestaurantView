@@ -2,10 +2,26 @@ package com.example.restaurantreview
 
 import com.google.gson.annotations.SerializedName
 
+// @SerializedName = untuk menandai sebuah variabel terhubung dengan data JSON
+// Pastikan tipe data yang digunakan disesuaikan dengan data yang diambil. Misal data 4.6 maka menggunakan tipe Double
+
 data class RestaurantResponse(
 
 	@field:SerializedName("restaurant")
 	val restaurant: Restaurant,
+
+	@field:SerializedName("error")
+	val error: Boolean,
+
+	@field:SerializedName("message")
+	val message: String
+)
+
+// send data
+data class PostReviewResponse(
+
+	@field:SerializedName("customerReviews")
+	val customerReviews: List<CustomerReviewsItem>,
 
 	@field:SerializedName("error")
 	val error: Boolean,
