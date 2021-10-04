@@ -36,6 +36,13 @@ class MainActivity : AppCompatActivity() {
         val itemDecoration = DividerItemDecoration(this, layoutManager.orientation)
         binding.rvReview.addItemDecoration(itemDecoration)
 
+        /*
+        customerReviews akan selalu diperbarui secara realtime sesuai dengan perubahan yang ada di
+        kelas ViewModel. Contohnya yaitu saat Anda menambahkan data review baru, alih alih memanggil
+        fungsi findRestaurant lagi, Anda cukup mengobservasi LiveData tersebut untuk selalu
+        mendapatkan data terbaru. Lebih lanjut, proses ini dilakukan secara asynchronous sehingga
+        tidak akan mengganggu interaksi UI Anda
+         */
         mainViewModel.listReview.observe(this, { consumerReviews ->
             setReviewData(consumerReviews)
         })
