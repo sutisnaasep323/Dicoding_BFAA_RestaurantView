@@ -9,6 +9,15 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class MainViewModel : ViewModel() {
+    /*
+    bedanya MutableLiveData bisa kita ubah value-nya, sedangkan LiveData bersifat read-only (tidak dapat diubah)
+
+    Inilah yang disebut dengan encapsulation pada LiveData, yaitu dengan membuat data yang bertipe
+    MutableLiveData menjadi private (_listReview) dan yang bertipe LiveData menjadi public (listReview).
+    Cara ini disebut dengan backing property. Dengan begitu Anda dapat mencegah variabel yang bertipe
+    MutableLiveData diubah dari luar class. Karena memang seharusnya hanya ViewModel-lah yang dapat
+    mengubah data.
+     */
     private val _restaurant = MutableLiveData<Restaurant>()
     val restaurant: LiveData<Restaurant> = _restaurant
     private val _listReview = MutableLiveData<List<CustomerReviewsItem>>()
@@ -26,6 +35,11 @@ class MainViewModel : ViewModel() {
     }
 
     private fun findRestaurant() {
+        /*
+        "_isLoading.setValue(true)"
+        Kita bisa menyisipkan perubahan yang terjadi dengan setValue().
+        Jadi secara realtime MutableLiveData akan menerima data yang baru
+         */
         _isLoading.value = true
         val client = ApiConfig.getApiService().getRestaurant(RESTAURANT_ID)
         /*
