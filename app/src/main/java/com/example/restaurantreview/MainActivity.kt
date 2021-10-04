@@ -52,11 +52,17 @@ class MainActivity : AppCompatActivity() {
         })
 
         mainViewModel.snackbarText.observe(this, {
-            Snackbar.make(
-                window.decorView.rootView,
-                it,
-                Snackbar.LENGTH_SHORT
-            ).show()
+            /*
+            memanfaatkan fungsi getContentIfHandled dari kelas Event untuk mengetahui apakah aksi
+            tersebut pernah dilakukan sebelumnya atau tidak
+             */
+            it.getContentIfNotHandled()?.let { snackBarText ->
+                Snackbar.make(
+                    window.decorView.rootView,
+                    snackBarText,
+                    Snackbar.LENGTH_SHORT
+                ).show()
+            }
         })
 
         binding.btnSend.setOnClickListener { view ->
