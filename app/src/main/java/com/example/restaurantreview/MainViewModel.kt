@@ -20,10 +20,15 @@ class MainViewModel : ViewModel() {
      */
     private val _restaurant = MutableLiveData<Restaurant>()
     val restaurant: LiveData<Restaurant> = _restaurant
+
     private val _listReview = MutableLiveData<List<CustomerReviewsItem>>()
     val listReview: LiveData<List<CustomerReviewsItem>> = _listReview
+
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> = _isLoading
+
+    private val _snackbarText = MutableLiveData<String>()
+    val snackbarText: LiveData<String> = _snackbarText
 
     companion object{
         private const val TAG = "MainViewModel"
@@ -43,7 +48,8 @@ class MainViewModel : ViewModel() {
         _isLoading.value = true
         val client = ApiConfig.getApiService().getRestaurant(RESTAURANT_ID)
         /*
-        ungsi enqueue untuk menjalankan request secara asynchronous di background. Sehingga aplikasi tidak freeze/lag ketika melakukan request
+        Fungsi enqueue untuk menjalankan request secara asynchronous di background. Sehingga
+        aplikasi tidak freeze/lag ketika melakukan request
          */
         client.enqueue(object : Callback<RestaurantResponse> {
             override fun onResponse(
@@ -83,6 +89,7 @@ class MainViewModel : ViewModel() {
                 _isLoading.value = false
                 if (response.isSuccessful) {
                     _listReview.value = response.body()?.customerReviews
+                    _snackbarText.value = response.body()?.message
                 } else {
                     Log.e(TAG, "onFailure: ${response.message()}")
                 }
