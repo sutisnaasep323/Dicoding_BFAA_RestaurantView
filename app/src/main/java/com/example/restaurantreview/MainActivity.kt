@@ -51,6 +51,7 @@ class MainActivity : AppCompatActivity() {
             showLoading(it)
         })
 
+        // 3. mengambil data
         mainViewModel.snackbarText.observe(this, {
             /*
             memanfaatkan fungsi getContentIfHandled dari kelas Event untuk mengetahui apakah aksi
